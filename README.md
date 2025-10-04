@@ -3,6 +3,7 @@
 An improved verion of https://github.com/FrancqNicolas/pitch-training
 
 This is a little game where you can work your musical ear by selecting octaves and notes to be challenged with!
+You can try it here : https://pitch-trainingg.netlify.app/
 
 ## Project Setup
 
