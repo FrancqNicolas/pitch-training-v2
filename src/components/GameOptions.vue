@@ -88,8 +88,6 @@ const emit = defineEmits<{
 .octave-btn {
   padding: 0.75rem 1.5rem;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
