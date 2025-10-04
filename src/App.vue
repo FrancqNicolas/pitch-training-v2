@@ -50,8 +50,6 @@ const handleStartNewRound = () => {
 
 <template>
   <div class="container">
-    <h1>🎹 Pitch Training Game</h1>
-
     <div class="options-wrapper">
       <button @click="toggleOptions" class="toggle-icon-btn">
         {{ showOptions ? '−' : '+' }}

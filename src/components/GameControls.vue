@@ -26,7 +26,6 @@ const emit = defineEmits<{
   font-size: 1.2rem;
   padding: 1rem 2rem;
   background: rgba(66, 184, 131, 0.8);
-  backdrop-filter: blur(10px);
   color: white;
   border: 1px solid rgba(66, 184, 131, 1);
   border-radius: 16px;

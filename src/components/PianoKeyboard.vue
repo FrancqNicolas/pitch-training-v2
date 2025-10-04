@@ -49,7 +49,6 @@ const emit = defineEmits<{
   align-items: center;
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5rem;
   border-radius: 20px;
@@ -79,7 +78,7 @@ const emit = defineEmits<{
   transition: all 0.2s;
   min-width: 60px;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
+  backdrop-filter:blur(10px);
 }
 
 .white-key {
