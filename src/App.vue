@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import confetti from 'canvas-confetti'
 import piano from '../assets/notes/notes.js'
 
 const allNotes = Object.keys(piano)
@@ -13,6 +14,44 @@ const selectedNoteNames = ref<string[]>([])
 const playNote = (note: string) => {
   const audio = new Audio(piano[note])
   audio.play()
+}
+
+const triggerConfetti = () => {
+  const count = 200
+  const defaults = {
+    origin: { y: 0.7 }
+  }
+
+  function fire(particleRatio: number, opts: any) {
+    confetti({
+      ...defaults,
+      ...opts,
+      particleCount: Math.floor(count * particleRatio)
+    })
+  }
+
+  fire(0.25, {
+    spread: 26,
+    startVelocity: 55,
+  })
+  fire(0.2, {
+    spread: 60,
+  })
+  fire(0.35, {
+    spread: 100,
+    decay: 0.91,
+    scalar: 0.8
+  })
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 25,
+    decay: 0.92,
+    scalar: 1.2
+  })
+  fire(0.1, {
+    spread: 120,
+    startVelocity: 45,
+  })
 }
 
 const availableOctaves = computed(() => {
@@ -60,6 +99,7 @@ const checkAnswer = (note: string) => {
   if (note === currentNote.value) {
     feedback.value = 'Correct! 🎉'
     score.value.correct++
+    triggerConfetti()
   } else {
     feedback.value = `Wrong! The correct note was ${currentNote.value}`
   }
@@ -187,7 +227,7 @@ const resetScore = () => {
 
 .container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
   padding: 2rem;
   text-align: center;
 }
@@ -200,14 +240,14 @@ h1 {
 }
 
 .options-section {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5rem;
   border-radius: 20px;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
 .options-section h3 {
@@ -232,10 +272,10 @@ h1 {
 
 .octave-btn {
   padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s;
@@ -244,9 +284,9 @@ h1 {
 }
 
 .octave-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .octave-btn.selected {
@@ -275,12 +315,12 @@ h1 {
 }
 
 .note-btn.white-note {
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
 }
 
 .note-btn.black-note {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   color: white;
 }
 
@@ -297,10 +337,10 @@ h1 {
 
 .reset-btn {
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s;
@@ -308,18 +348,18 @@ h1 {
 }
 
 .reset-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
 }
 
 .score-board {
   margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem;
   border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
 .score {
@@ -387,12 +427,12 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1.5rem;
   border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
 .octave-label {
@@ -411,7 +451,7 @@ h1 {
 
 .piano-key {
   padding: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: bold;
@@ -422,12 +462,12 @@ h1 {
 }
 
 .white-key {
-  background: rgba(255, 255, 255, 0.9);
-  color: #333;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
 }
 
 .black-key {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   color: white;
 }
 
