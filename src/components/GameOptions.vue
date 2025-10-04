@@ -87,10 +87,11 @@ const emit = defineEmits<{
 
 .octave-btn {
   padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s;
@@ -127,15 +128,16 @@ const emit = defineEmits<{
   font-size: 1rem;
   font-weight: bold;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .note-btn.white-note {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
   color: white;
 }
 
 .note-btn.black-note {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   color: white;
 }
 
@@ -158,10 +160,11 @@ const emit = defineEmits<{
 
 .reset-btn {
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s;
