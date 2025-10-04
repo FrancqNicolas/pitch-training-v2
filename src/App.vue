@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import GameOptions from './components/GameOptions.vue'
 import ScoreBoard from './components/ScoreBoard.vue'
 import GameControls from './components/GameControls.vue'
@@ -25,9 +26,31 @@ const {
 } = usePitchGame()
 
 const { triggerConfetti } = useConfetti()
+const showBorders = ref(false)
+const showOptions = ref(true)
 
 const handleCheckAnswer = (note: string) => {
-  checkAnswer(note, triggerConfetti)
+  checkAnswer(note, () => {
+    showBorders.value = true
+    triggerConfetti()
+    setTimeout(() => {
+      showBorders.value = false
+    }, 3000)
+  })
+}
+
+const resetOptions = () => {
+  selectedOctaves.value = []
+  selectedNoteNames.value = []
+}
+
+const toggleOptions = () => {
+  showOptions.value = !showOptions.value
+}
+
+const handleStartNewRound = () => {
+  startNewRound()
+  showOptions.value = false
 }
 </script>
 
@@ -35,22 +58,30 @@ const handleCheckAnswer = (note: string) => {
   <div class="container">
     <h1>🎹 Pitch Training Game</h1>
 
-    <GameOptions
-      :availableOctaves="availableOctaves"
-      :selectedOctaves="selectedOctaves"
-      :availableNoteNames="availableNoteNames"
-      :selectedNoteNames="selectedNoteNames"
-      @toggleOctave="toggleOctave"
-      @toggleNoteName="toggleNoteName"
-      @resetScore="resetScore"
-    />
+    <div class="options-wrapper">
+      <button @click="toggleOptions" class="toggle-icon-btn">
+        {{ showOptions ? '−' : '+' }}
+      </button>
+
+      <GameOptions
+        v-if="showOptions"
+        :availableOctaves="availableOctaves"
+        :selectedOctaves="selectedOctaves"
+        :availableNoteNames="availableNoteNames"
+        :selectedNoteNames="selectedNoteNames"
+        @toggleOctave="toggleOctave"
+        @toggleNoteName="toggleNoteName"
+        @resetScore="resetScore"
+        @resetOptions="resetOptions"
+      />
+    </div>
 
     <ScoreBoard :correct="score.correct" :total="score.total" :percentage="scorePercentage" />
 
     <GameControls
       :currentNote="currentNote"
       :feedback="feedback"
-      @startNewRound="startNewRound"
+      @startNewRound="handleStartNewRound"
     />
 
     <PianoKeyboard
@@ -60,6 +91,11 @@ const handleCheckAnswer = (note: string) => {
       :currentNote="currentNote"
       @checkAnswer="handleCheckAnswer"
     />
+
+    <div v-if="showBorders" class="border-top"></div>
+    <div v-if="showBorders" class="border-right"></div>
+    <div v-if="showBorders" class="border-bottom"></div>
+    <div v-if="showBorders" class="border-left"></div>
   </div>
 </template>
 
@@ -87,5 +123,97 @@ h1 {
   color: white;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   font-size: 2.5rem;
+}
+
+.options-wrapper {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.toggle-icon-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.toggle-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.border-top,
+.border-right,
+.border-bottom,
+.border-left {
+  position: fixed;
+  animation: colorShift 0.2s ease infinite;
+  z-index: 1000;
+}
+
+.border-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.border-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+}
+
+.border-bottom {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.border-left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 8px;
+}
+
+@keyframes colorShift {
+  0% {
+    background: #ff0080;
+  }
+  16.66% {
+    background: #7928ca;
+  }
+  33.33% {
+    background: #0070f3;
+  }
+  50% {
+    background: #00d4ff;
+  }
+  66.66% {
+    background: #00ff88;
+  }
+  83.33% {
+    background: #ffdd00;
+  }
+  100% {
+    background: #ff0080;
+  }
 }
 </style>
