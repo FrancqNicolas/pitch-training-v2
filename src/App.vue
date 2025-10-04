@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import GameOptions from './components/GameOptions.vue'
 import ScoreBoard from './components/ScoreBoard.vue'
 import GameControls from './components/GameControls.vue'
 import PianoKeyboard from './components/PianoKeyboard.vue'
 import { usePitchGame } from './composables/usePitchGame'
 import { useConfetti } from './composables/useConfetti'
+import { useBorderAnimation } from './composables/useBorderAnimation'
+import { useOptionsPanel } from './composables/useOptionsPanel'
 
 const {
   currentNote,
@@ -26,16 +27,13 @@ const {
 } = usePitchGame()
 
 const { triggerConfetti } = useConfetti()
-const showBorders = ref(false)
-const showOptions = ref(true)
+const { showBorders, triggerBorders } = useBorderAnimation()
+const { showOptions, toggleOptions, hideOptions } = useOptionsPanel()
 
 const handleCheckAnswer = (note: string) => {
   checkAnswer(note, () => {
-    showBorders.value = true
+    triggerBorders()
     triggerConfetti()
-    setTimeout(() => {
-      showBorders.value = false
-    }, 3000)
   })
 }
 
@@ -44,13 +42,9 @@ const resetOptions = () => {
   selectedNoteNames.value = []
 }
 
-const toggleOptions = () => {
-  showOptions.value = !showOptions.value
-}
-
 const handleStartNewRound = () => {
   startNewRound()
-  showOptions.value = false
+  hideOptions()
 }
 </script>
 
