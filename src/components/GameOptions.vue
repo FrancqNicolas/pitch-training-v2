@@ -12,6 +12,7 @@ const emit = defineEmits<{
   toggleOctave: [octave: string]
   toggleNoteName: [noteName: string]
   resetScore: []
+  resetOptions: []
 }>()
 </script>
 
@@ -45,7 +46,10 @@ const emit = defineEmits<{
       </button>
     </div>
 
-    <button @click="emit('resetScore')" class="reset-btn">Reset Score</button>
+    <div class="reset-buttons">
+      <button @click="emit('resetOptions')" class="reset-btn">Reset Options</button>
+      <button @click="emit('resetScore')" class="reset-btn">Reset Score</button>
+    </div>
   </div>
 </template>
 
@@ -144,6 +148,12 @@ const emit = defineEmits<{
   border-color: rgba(66, 184, 131, 1);
   border-width: 2px;
   box-shadow: 0 0 20px rgba(66, 184, 131, 0.6);
+}
+
+.reset-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
 }
 
 .reset-btn {

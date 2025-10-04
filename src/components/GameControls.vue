@@ -14,9 +14,6 @@ const emit = defineEmits<{
     <button @click="emit('startNewRound')" class="play-btn">
       {{ currentNote ? 'Play Again' : 'Start Game' }}
     </button>
-    <div v-if="feedback" :class="['feedback', feedback.includes('Correct') ? 'correct' : 'wrong']">
-      {{ feedback }}
-    </div>
   </div>
 </template>
 
