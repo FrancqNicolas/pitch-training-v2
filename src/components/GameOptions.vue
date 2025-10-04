@@ -125,8 +125,6 @@ const emit = defineEmits<{
   transition: all 0.3s;
   font-size: 1rem;
   font-weight: bold;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .note-btn.white-note {
